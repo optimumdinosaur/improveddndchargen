@@ -1,0 +1,262 @@
+{
+	"Appraise" : {
+		"key_abi" : 3, 
+		"trained_only" : false, 
+		"armor_check" : 0 
+	},
+	"Balance" : {
+		"key_abi" : 1,
+		"trained_only" : false,
+		"armor_check" : 1
+	},
+	"Bluff" : {
+		"key_abi" : 5,
+		"trained_only" : false,
+		"armor_check" : 0
+	},
+	"Climb" : {
+		"key_abi" : 0,
+		"trained_only" : false,
+		"armor_check" : 1
+	},
+	"Concentration" : {
+		"key_abi" : 2,
+		"trained_only" : false,
+		"armor_check" : 0
+	},
+	"Craft" : {
+		"key_abi" : 3,
+		"trained_only" : false,
+		"armor_check" : 0
+	},
+	"Decipher Script" : {
+		"key_abi" : 3,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Diplomacy" : {
+		"key_abi" : 5,
+		"trained_only" : false,
+		"armor_check" : 0
+	},
+	"Disable Device" : {
+		"key_abi" : 3,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Disguise" : {
+		"key_abi" : 5,
+		"trained_only" : false,
+		"armor_check" : 0
+	},
+	"Escape Artist" : {
+		"key_abi" : 1,
+		"trained_only" : false,
+		"armor_check" : 1
+	},
+	"Forgery" : {
+		"key_abi" : 3,
+		"trained_only" : false,
+		"armor_check" : 0
+	},
+	"Gather Information" : {
+		"key_abi" : 5,
+		"trained_only" : false,
+		"armor_check" : 0
+	},
+	"Handle Animal" : {
+		"key_abi" : 5,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Heal" : {
+		"key_abi" : 4,
+		"trained_only" : false,
+		"armor_check" : 0
+	},
+	"Hide" : {
+		"key_abi" : 1,
+		"trained_only" : false,
+		"armor_check" : 1
+	},
+	"Intimidate" : {
+		"key_abi" : 5,
+		"trained_only" : false,
+		"armor_check" : 0
+	},
+	"Jump" : {
+		"key_abi" : 0,
+		"trained_only" : false,
+		"armor_check" : 1
+	},
+	"Knowledge (Arcana)" : {
+		"key_abi" : 3,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Knowledge (Architecture & Engineering)" : {
+		"key_abi" : 3,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Knowledge (Dungeoneering)" : {
+		"key_abi" : 3,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Knowledge (Geography)" : {
+		"key_abi" : 3,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Knowledge (History)" : {
+		"key_abi" : 3,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Knowledge (Local)" : {
+		"key_abi" : 3,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Knowledge (Nature)" : {
+		"key_abi" : 3,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Knowledge (Nobility & Royalty)" : {
+		"key_abi" : 3,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Knowledge (Religion)" : {
+		"key_abi" : 3,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Knowledge (The Planes)" : {
+		"key_abi" : 3,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Listen" : {
+		"key_abi" : 4,
+		"trained_only" : false,
+		"armor_check" : 0
+	},
+	"Move Silently" : {
+		"key_abi" : 1,
+		"trained_only" : false,
+		"armor_check" : 1
+	},
+	"Open Lock" : {
+		"key_abi" : 1,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Perform (Act)" : {
+		"key_abi" : 5,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Perform (Comedy)" : {
+		"key_abi" : 5,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Perform (Dance)" : {
+		"key_abi" : 5,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Perform (Keyboard)" : {
+		"key_abi" : 5,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Perform (Oratory)" : {
+		"key_abi" : 5,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Perform (Percussion)" : {
+		"key_abi" : 5,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Perform (Strings)" : {
+		"key_abi" : 5,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Perform (Wind)" : {
+		"key_abi" : 5,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Perform (Sing)" : {
+		"key_abi" : 5,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Profession" : {
+		"key_abi" : 4,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Ride" : {
+		"key_abi" : 1,
+		"trained_only" : false,
+		"armor_check" : 0
+	},
+	"Search" : {
+		"key_abi" : 3,
+		"trained_only" : false,
+		"armor_check" : 0
+	},
+	"Sense Motive" : {
+		"key_abi" : 4,
+		"trained_only" : false,
+		"armor_check" : 0
+	},
+	"Sleight of Hand" : {
+		"key_abi" : 1,
+		"trained_only" : true,
+		"armor_check" : 1
+	},
+	"Spellcraft" : {
+		"key_abi" : 3,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Spot" : {
+		"key_abi" : 4,
+		"trained_only" : false,
+		"armor_check" : 0
+	},
+	"Survival" : {
+		"key_abi" : 4,
+		"trained_only" : false,
+		"armor_check" : 0
+	},
+	"Swim" : {
+		"key_abi" : 0,
+		"trained_only" : false,
+		"armor_check" : 2
+	},
+	"Tumble" : {
+		"key_abi" : 1,
+		"trained_only" : true,
+		"armor_check" : 1
+	},
+	"Use Magic Device" : {
+		"key_abi" : 5,
+		"trained_only" : true,
+		"armor_check" : 0
+	},
+	"Use Rope" : {
+		"key_abi" : 1,
+		"trained_only" : false,
+		"armor_check" : 0
+	}
+}
