@@ -15,7 +15,7 @@ class Character():
 			class_data = json.load(json_file)
 		# class_choices = list(class_data.keys())
 		# chosen_class = random.choice(class_choices)
-		chosen_class = "paladin"
+		chosen_class = "sorcerer"
 		self.class_data = class_data[chosen_class]
 		self.class_levels = {chosen_class : level}
 		self.ability_scores = [0, 0, 0, 0, 0, 0]
@@ -28,6 +28,7 @@ class Character():
 		self.calc_skills()
 		self.get_special()
 		self.get_spells_per_day()
+		self.learn_spells()
 
 	def print(self):
 		print ("class levels: " + str(self.class_levels))
@@ -45,8 +46,10 @@ class Character():
 		print ("Special Abilities: ")
 		for each_ability in self.special:
 			print (" " + each_ability)
-		if self.spells_per_day:
+		if self.class_data.get("spells_per_day"):
 			print (self.spells_per_day)
+		if self.class_data.get("spells_known"):
+			print (self.spells_known)
 
 	def roll_for_stats(self):
 		net_mod = 0
@@ -167,14 +170,25 @@ class Character():
 				self.special.append(each_feature)
 
 	def get_spells_per_day(self):
-		self.spells_per_day = self.class_data["spells_per_day"][list(self.class_levels.values())[0] - 1]
-		self.calc_bonus_spells()
+		if self.class_data.get("spells_per_day"):
+			self.spells_per_day = self.class_data["spells_per_day"][list(self.class_levels.values())[0] - 1]
+			self.calc_bonus_spells()
 	
 	def calc_bonus_spells(self):
 		spd_enum = enumerate(self.spells_per_day, (1, 0)[self.class_data["cantrips"]])
 		for slvl, spd in spd_enum:
 			if slvl != 0:
 				self.spells_per_day[(slvl - 1, slvl)[self.class_data["cantrips"]]] += math.ceil((self.abi_mods[self.class_data["bonus_spell_abi"]] - slvl + 1) / 4)
+
+	def learn_spells(self):
+		if self.class_data.get("spells_known"):
+			self.spells_known = []
+			num_of_spells_known = self.class_data["spells_known"][list(self.class_levels.values())[0] - 1]
+			for slvl in range(len(num_of_spells_known)):
+				self.spells_known.append(set())
+				while len(self.spells_known[slvl]) < num_of_spells_known[slvl]:
+					spell_to_add = random.choice(self.class_data["spell_list"][slvl])
+					self.spells_known[slvl].add(spell_to_add)
 
 character = Character()
 character.print()
