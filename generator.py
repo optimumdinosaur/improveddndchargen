@@ -15,7 +15,7 @@ class Character():
 			class_data = json.load(json_file)
 		# class_choices = list(class_data.keys())
 		# chosen_class = random.choice(class_choices)
-		chosen_class = "sorcerer"
+		chosen_class = "cleric"
 		self.class_data = class_data[chosen_class]
 		self.class_levels = {chosen_class : level}
 		self.ability_scores = [0, 0, 0, 0, 0, 0]
@@ -28,7 +28,7 @@ class Character():
 		self.calc_skills()
 		self.get_special()
 		self.get_spells_per_day()
-		self.learn_spells()
+		self.learn_prepare_spells()
 
 	def print(self):
 		print ("class levels: " + str(self.class_levels))
@@ -48,8 +48,10 @@ class Character():
 			print (" " + each_ability)
 		if self.class_data.get("spells_per_day"):
 			print (self.spells_per_day)
-		if self.class_data.get("spells_known"):
-			print (self.spells_known)
+			if self.class_data.get("spells_known"):
+				print (self.spells_known)
+			else:
+				print (self.spells_prepared)
 
 	def roll_for_stats(self):
 		net_mod = 0
@@ -180,8 +182,8 @@ class Character():
 			if slvl != 0:
 				self.spells_per_day[(slvl - 1, slvl)[self.class_data["cantrips"]]] += math.ceil((self.abi_mods[self.class_data["bonus_spell_abi"]] - slvl + 1) / 4)
 
-	def learn_spells(self):
-		if self.class_data.get("spells_known"):
+	def learn_prepare_spells(self):
+		if self.class_data.get("spells_known"): # Spontaneous caster
 			self.spells_known = []
 			num_of_spells_known = self.class_data["spells_known"][list(self.class_levels.values())[0] - 1]
 			for slvl in range(len(num_of_spells_known)):
@@ -189,6 +191,13 @@ class Character():
 				while len(self.spells_known[slvl]) < num_of_spells_known[slvl]:
 					spell_to_add = random.choice(self.class_data["spell_list"][slvl])
 					self.spells_known[slvl].add(spell_to_add)
+		else: # Prepared caster
+			self.spells_prepared = []
+			for slvl in range(len(self.spells_per_day)):
+				self.spells_prepared.append([])
+				for _ in range(self.spells_per_day[slvl]):
+					spell_to_add = random.choice(self.class_data["spell_list"][slvl])
+					self.spells_prepared[slvl].append(spell_to_add)
 
 character = Character()
 character.print()
