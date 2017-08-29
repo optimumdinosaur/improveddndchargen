@@ -1,0 +1,60 @@
+{
+	"human" : {
+		"size" : 0,
+		"land_speed" : 30,
+		"special" : ["Human Bonus Feat", "Human Bonus Skill Points"],
+		"auto_lang" : ["Common"],
+		"bonus_lang" : ["Abyssal", "Aquan", "Auran", "Celestial", "Draconic", "Dwarven", "Elven", "Giant", "Gnome", "Gnoll", "Halfling", "Ignan", "Infernal", "Orc", "Sylvan", "Terran", "Undercommon"]
+	},
+	"dwarf" : {
+		"abi_adjust" : [0, 0, 2, 0, 0, -2],
+		"size" : 0,
+		"land_speed" : 20,
+		"special" : ["Darkvision 60ft", "Stonecunning", "Dwarven Weapon Familiarity", "Stability", "Dwarven Poison Resistance", "Dwarven Spell Resistance", "Orc & Goblinoid Hatred", "Dwarven Giant-Dodging", "Dwarven Stone & Metal Expertise"],
+		"auto_lang" : ["Common", "Dwarven"],
+		"bonus_lang" : ["Giant", "Gnome", "Goblin", "Orc", "Terran", "Undercommon"]
+	},
+	"elf" : {
+		"abi_adjust" : [0, 2, -2, 0, 0, 0],
+		"size" : 0,
+		"land_speed" : 30,
+		"special" : ["Elven Enchantment Resistance", "Elven Sleep Immunity", "Low-Light Vision", "Elven Weapon Familiarity"],
+		"skill_adjust" : {"Listen" : 2, "Search" : 2, "Spot" : 2},
+		"auto_lang" : ["Common", "Elven"],
+		"bonus_lang" : ["Draconic", "Gnoll", "Gnome", "Goblin", "Orc", "Sylvan"]
+	},
+	"gnome" : {
+		"abi_adjust" : [-2, 0, 2, 0, 0, 0],
+		"size" : -1,
+		"land_speed" : 20,
+		"special" : ["Low-Light Vision", "Gnomish Weapon Familiarity", "Gnomish Illusion Focus", "Kobold & Goblinoid Hatred", "Gnomish Giant-Dodging", "Gnomish Spell-Like Abilities"],
+		"skill_adjust" : {"Listen" : 2, "Craft (Alchemy)" : 2},
+		"auto_lang" : ["Common", "Gnome"],
+		"bonus_lang" : ["Draconic", "Dwarven", "Elven", "Giant", "Goblin", "Orc"]
+	},
+	"half-elf" : {
+		"size" : 0,
+		"land_speed" : 30,
+		"special" : ["Elven Enchantment Resistance", "Elven Sleep Immunity", "Low-Light Vision", "Elven Blood"],
+		"skill_adjust" : {"Listen" : 1, "Search" : 1, "Spot" : 1, "Diplomacy" : 2, "Gather Information" : 2},
+		"auto_lang" : ["Common", "Elven"],
+		"bonus_lang" : ["Abyssal", "Aquan", "Auran", "Celestial", "Draconic", "Dwarven", "Elven", "Giant", "Gnome", "Gnoll", "Halfling", "Ignan", "Infernal", "Orc", "Sylvan", "Terran", "Undercommon"]
+	},
+	"half-orc" : {
+		"abi_adjust" : [2, 0, 0, -2, 0, -2],
+		"size" : 0,
+		"land_speed" : 30,
+		"special" : ["Darkvision 60ft", "Orc Blood"],
+		"auto_lang" : ["Common", "Orc"],
+		"bonus_lang" : ["Draconic", "Giant", "Gnoll", "Goblin", "Abyssal"]
+	},
+	"halfling" : {
+		"abi_adjust" : [-2, 2, 0, 0, 0, 0],
+		"size" : -1,
+		"land_speed" : 20,
+		"special" : ["Halfling Luck", "Halfling Fearlessness", "Halfling Thrown Weapon Focus"],
+		"skill_adjust" : {"Climb" : 2, "Jump" : 2, "Listen" : 2, "Move Silently" : 2},
+		"auto_lang" : ["Common", "Halfling"],
+		"bonus_lang" : ["Dwarven", "Elven", "Gnome", "Goblin", "Orc"]
+	}
+}

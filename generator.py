@@ -4,7 +4,8 @@ import re
 import math
 
 class_file = "core_classes.json"
-skills_file = "core_skills.json"
+races_file = "core_races.json"
+skills_file = "all_skills.json"
 
 
 class Character():
@@ -13,24 +14,27 @@ class Character():
 
 		with open(class_file) as json_file:
 			class_data = json.load(json_file)
-		# class_choices = list(class_data.keys())
-		# chosen_class = random.choice(class_choices)
-		chosen_class = "cleric"
+		chosen_class = random.choice(list(class_data.keys()))
+		# chosen_class = "wizard"
 		self.class_data = class_data[chosen_class]
 		self.class_levels = {chosen_class : level}
 		self.ability_scores = [0, 0, 0, 0, 0, 0]
 		self.abi_mods = [0, 0, 0, 0, 0, 0]
 		self.special = []
+		self.languages = set()
+		print ("Making a level " + str(level) + " " + str(chosen_class))
 		self.roll_for_stats()
+		self.initialize_skills()
+		self.get_racial_traits()
 		self.calc_hit_points()
 		self.calc_bab()
 		self.calc_saves()
 		self.calc_skills()
-		self.get_special()
-		self.get_spells_per_day()
-		self.learn_prepare_spells()
+		self.get_class_special()
+		self.get_spells()
 
 	def print(self):
+		print ("race: " + str(self.race))
 		print ("class levels: " + str(self.class_levels))
 		print ("abi scores: " + str(self.ability_scores))
 		print ("abi mods:   " + str(self.abi_mods))
@@ -39,10 +43,11 @@ class Character():
 		print ("fort save:  " + str(self.fort_save))
 		print ("ref save:  " + str(self.ref_save))
 		print ("will save:  " + str(self.will_save))
-		print ("Skills with ranks:  ")
+		print ("Skills worth printing:  ")
 		for each_skill in self.skills:
-			if self.skills[each_skill]["ranks"] > 0:
-				print (" " + each_skill + " : total bonus: " + str(self.skills[each_skill]["total"]))
+			if self.skills[each_skill]["ranks"] > 0 or self.skills[each_skill]["misc"] > 0:
+				# print (" " + each_skill + " : total : " + str(self.skills[each_skill]["total"]))
+				print (" {} : Total:{} (R:{}, M:{})".format(each_skill, self.skills[each_skill]["total"], self.skills[each_skill]["ranks"], self.skills[each_skill]["misc"]))
 		print ("Special Abilities: ")
 		for each_ability in self.special:
 			print (" " + each_ability)
@@ -52,6 +57,9 @@ class Character():
 				print (self.spells_known)
 			else:
 				print (self.spells_prepared)
+		print ("Languages Fluent: ")
+		for each_lanaguage in self.languages:
+			print (" " + str(each_lanaguage))
 
 	def roll_for_stats(self):
 		net_mod = 0
@@ -137,7 +145,7 @@ class Character():
 		if self.will_save["plus_two"]:
 			self.will_save["total"] += 2
 
-	def calc_skills(self):
+	def initialize_skills(self):
 		with open(skills_file) as json_file:
 			skill_data = json.load(json_file)
 		self.skills = {}
@@ -147,18 +155,80 @@ class Character():
 										"misc" : 0,
 										"armor_check" : skill_data[each_skill]["armor_check"],
 										"total" : 0}
-		num_of_pri_skills = self.class_data["sppl"] + self.abi_mods[3] # class's sppl + int mod
-		priority_skills = set()
-		for i in range(num_of_pri_skills):
-			while len(priority_skills) < (i+1):
-				skill_to_add = random.choice(self.class_data["class_skills"])
-				priority_skills.add(skill_to_add)
-		for each_skill in priority_skills:
-			self.skills[each_skill]["ranks"] = ( list(self.class_levels.values())[0] + 3 )
-		for each_skill in self.skills:
-			self.skills[each_skill]["total"] = ( self.skills[each_skill]["ranks"] + self.abi_mods[self.skills[each_skill]["key_abi"]] )
 
-	def get_special(self):
+	def initialize_skill(self, new_skill):
+		self.skills[new_skill] = {"ranks" : 0, "misc" : 0, "armor_check" : 0, "total" : 0}
+		if "Craft" in new_skill or "Knowledge" in new_skill:
+			self.skills[new_skill]["key_abi"] = 3
+		elif "Perform" in new_skill:
+			self.skills[new_skill]["key_abi"] = 5
+		elif "Profession" in new_skill:
+			self.skills[new_skill]["key_abi"] = 4
+		else:
+			self.skills[new_skill]["key_abi"] = 2 # *shrug*
+
+
+	def calc_skills(self):
+		priority_skills = set()
+		if self.class_data.get("priority_skills"):
+			for each_skill in self.class_data["priority_skills"]:
+				priority_skills.add(each_skill)
+		min_num_pri_skills = math.floor((self.class_data["sppl"] + self.abi_mods[3]) / 2)
+		while len(priority_skills) < min_num_pri_skills:
+			priority_skills.add(random.choice(self.class_data["class_skills"]))
+
+		max_rank = ( list(self.class_levels.values())[0] + 3 )
+		num_skill_points = max_rank * (self.class_data["sppl"] + self.abi_mods[3])
+
+		for each_skill in priority_skills:
+			if num_skill_points >= max_rank:
+				self.skills[each_skill]["ranks"] = max_rank
+				num_skill_points -= max_rank
+			else:
+				self.skills[each_skill]["ranks"] = num_skill_points
+				num_skill_points = 0
+				break
+		while num_skill_points > 0:
+			poss_skill = random.choice(self.class_data["class_skills"])
+			if self.skills[poss_skill]["ranks"] < max_rank:
+				self.skills[poss_skill]["ranks"] += 1
+				num_skill_points -= 1
+
+		for each_skill in self.skills:
+			self.skills[each_skill]["total"] = ( self.skills[each_skill]["ranks"] + self.abi_mods[self.skills[each_skill]["key_abi"]] + self.skills[each_skill]["misc"] )
+
+	def get_racial_traits(self):
+		with open(races_file) as json_file:
+			race_data = json.load(json_file)
+		# self.race = random.choice(list(race_data.keys()))
+		self.race = "gnome"
+		self.race_data = race_data[self.race]
+
+		if self.race_data.get("abi_adjust"):
+			for i in range(6):
+				self.ability_scores[i] += self.race_data["abi_adjust"][i]
+			self.calc_abi_mods()
+
+		if self.race_data.get("skill_adjust"):
+			for each_skill in list(self.race_data["skill_adjust"].keys()):
+				if each_skill not in self.skills:
+					self.initialize_skill(each_skill)
+				self.skills[each_skill]["misc"] += self.race_data["skill_adjust"][each_skill]
+
+		for each in self.race_data["special"]:
+			self.special.append(each)
+
+		for each in self.race_data["auto_lang"]:
+			self.languages.add(each)
+		if self.abi_mods[3] > 0:
+			while len(self.languages) < (len(self.race_data["auto_lang"]) + self.abi_mods[3]):
+				self.languages.add(random.choice(self.race_data["bonus_lang"]))
+
+		self.size = self.race_data["size"]
+		self.land_speed = self.race_data["land_speed"]
+
+
+	def get_class_special(self):
 		number_abi_pattern = re.compile(r'[A-Za-z /()\+-]*[0-9]+[A-Za-z /()\+-]*')
 		number_or_dice = re.compile(r'[-\+]?[0-9]+[d0-9+]?')
 		for i in range(list(self.class_levels.values())[0]):
@@ -168,13 +238,17 @@ class Character():
 						if number_abi_pattern.match(old_ability):
 							if number_or_dice.split(each_feature, 1)[0] == number_or_dice.split(old_ability, 1)[0]:
 								self.special.remove(old_ability)
-								break
+								break		
 				self.special.append(each_feature)
 
-	def get_spells_per_day(self):
+	def get_spells(self):
 		if self.class_data.get("spells_per_day"):
-			self.spells_per_day = self.class_data["spells_per_day"][list(self.class_levels.values())[0] - 1]
-			self.calc_bonus_spells()
+			self.get_spells_per_day()
+			self.learn_prepare_spells()
+
+	def get_spells_per_day(self):
+		self.spells_per_day = self.class_data["spells_per_day"][list(self.class_levels.values())[0] - 1]
+		self.calc_bonus_spells()
 	
 	def calc_bonus_spells(self):
 		spd_enum = enumerate(self.spells_per_day, (1, 0)[self.class_data["cantrips"]])
@@ -196,7 +270,7 @@ class Character():
 			for slvl in range(len(self.spells_per_day)):
 				self.spells_prepared.append([])
 				for _ in range(self.spells_per_day[slvl]):
-					spell_to_add = random.choice(self.class_data["spell_list"][slvl])
+					spell_to_add = random.choice(self.class_data["spell_list"][slvl]) 
 					self.spells_prepared[slvl].append(spell_to_add)
 
 character = Character()
